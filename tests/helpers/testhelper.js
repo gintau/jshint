@@ -28,14 +28,16 @@
 
 /*jshint node: true, eqnull: true*/
 
-var JSHINT = require('../../src/jshint.js').JSHINT;
+'use strict';
+
+var JSHINT = require("../..").JSHINT;
 
 if (exports.setup === undefined || exports.setup === null) {
   exports.setup = {};
 }
 
 exports.setup.testRun = function (test, name) {
-  var initCounter = 0, runCounter = 0, seq = 0, checked = [], definedErrors = [];
+  var definedErrors = [];
 
   var helperObj = {
     addError: function (line, message, extras) {
@@ -125,9 +127,10 @@ exports.setup.testRun = function (test, name) {
       });
 
       test.ok(
-        undefinedErrors.length === 0 && unthrownErrors.length === 0 && wrongLineNumbers.length === 0,
+        undefinedErrors.length === 0
+          && unthrownErrors.length === 0 && wrongLineNumbers.length === 0,
 
-        (name == null ? "" : "\n  TestRun: [bold]{" + name + "}") +
+        (name === null ? "" : "\n  TestRun: [bold]{" + name + "}") +
         unthrownErrors.map(function (el, idx) {
           return (idx === 0 ? "\n  [yellow]{Errors defined, but not thrown by JSHINT}\n" : "") +
             " [bold]{Line " + el.line + ", Char " + el.character + "} " + el.message;
